@@ -17,7 +17,7 @@
 			$('#interval').val(openPayLoad);
 			$('#closeButton').click(closeDialog);
 			// load dashboard and prep datasource
-			let dashboard = tableau.extension.dashboardContent.dashboard;
+			let dashboard = tableau.extensions.dashboardContent.dashboard;
 			let visibleDatasources = [];
 			
 			dashboard.worksheets.forEach(function (worksheet) {
