@@ -11,7 +11,7 @@
   $(document).ready(function () {
   // Initialize tableau extension
 	tableau.extensions.initializeAsync({'configure': configure}).then(function () {
-	  let currentSettings = tableau.extensions.settings.getAll();
+	  let currentSettings = tableau.extension.settings.getAll();
 	  fetchFilter();
 	  fetchCurrentSettings();
 	  if (typeof currentSettings.sheet !== "undefined") {
@@ -26,8 +26,32 @@
     // ========================== D3 CHART ===================== //
 
   function plotChart(settings) {
-      console.log(settings);
-      console.log(settings.selectedColumns[1]);
+	  var worksheetsName = settings.sheet;
+	  const worksheet = getSelectedSheet(worksheetsName);
+	  indexColors = settings.selectedColors[1];
+	  indexColumns = settings.selectedColumns[1];
+	  indexRadius = settings.selectedRadius[1];
+	  indexValues = settings.selectedValues[1];
+	  let dataArr = [];
+	  worksheet.getSummaryDataAsync().then(data => {
+		  let dataJson;
+		  data.data.map(d => {
+			  dataJson = {};
+			  dataJson['Colors'] = d[indexColors].value;
+			  dataJson['Columns'] = d[indexColumns].value;
+			  dataJson['Radius'] = d[indexRadius].value;
+			  dataJson['Values'] = d[indexValues].value;
+			  dataArr.push(dataJson);
+
+			   
+		  });
+		  
+		  dataArr = dataArr.filter(function(n){return n.Values != "%null%"});
+		  graph(dataArr);
+	  });
+	  
+	  
+	  
 	  var div = d3.select("body").append("div")
 		  .attr("class", "tooltip")
 		  .style("opacity", 0);
@@ -35,7 +59,7 @@
 	  var width = 1200,
 		  height = 600;
 	  
-	  function graph() {
+	  function graph(data) {
 		d3.select("svg").remove();
 		var svg = d3.select("body").append("svg")
 			.attr("width", width)
@@ -43,24 +67,24 @@
 			.append("g");
 			//.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");		  
 
-		let centers = Array.from(new Set(data.map((d) => d.Center)));
-		//let yCoords = centers.map((d, i) => (i+1) * (height/(centers.length+2)));
-		let yCoords = centers.map((d,i) => height/2);
-		let yScale = d3.scaleOrdinal().domain(centers).range(yCoords);
+		let Colors = Array.from(new Set(data.map((d) => d.Colors)));
+		//let yCoords = Colors.map((d, i) => (i+1) * (height/(Colors.length+2)));
+		let yCoords = Colors.map((d,i) => height/2);
+		let yScale = d3.scaleOrdinal().domain(Colors).range(yCoords);
 
 		let xScale = d3
 		  .scaleLinear()
 		  .domain([1,0])
-		  //.domain(d3.extent(data.map((d) => +d["Percent"])))
+		  //.domain(d3.extent(data.map((d) => +d["Values"])))
 		  .range([width - 50, 50]);
 
-		let color = d3.scaleOrdinal().domain(centers).range(d3.schemePaired);
+		let color = d3.scaleOrdinal().domain(Colors).range(d3.schemePaired);
 
 		let percentAxis = d3.axisBottom(xScale).tickFormat(d3.format(",.0%"));
 		
-		let panelDomain = d3.extent(data.map((d) => d["SUM(Denominator)"]));
-		panelDomain = panelDomain.map((d) => Math.sqrt(d));
-		let size = d3.scaleLinear().domain(panelDomain).range([5, 25]);
+		let radiusDomain = d3.extent(data.map((d) => d.Radius));
+		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
+		let size = d3.scaleLinear().domain(radiusDomain).range([5, 25]);
 
 		svg
 		  .selectAll(".circ")
@@ -69,10 +93,10 @@
 		  .append("circle")
 		  .attr("class", "circ")
 		  .attr("stroke", "black")
-		  .attr("fill", (d) => color(d.Center))
-		  .attr("r", (d) => size(Math.sqrt(d["SUM(Denominator)"])))
-		  .attr("cy", (d) => yScale(d.Center))
-		  .attr("cx", (d) => xScale(d.Percent));
+		  .attr("fill", (d) => color(d.Colors))
+		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
+		  .attr("cy", (d) => yScale(d.Colors))
+		  .attr("cx", (d) => xScale(d.Values));
 
 		  
 		svg
@@ -85,7 +109,7 @@
 			"y",
 			d3
 			  .forceY((d) => {
-				return yScale(d.Center);
+				return yScale(d.Colors);
 			  })
 			  .strength(0.2)
 		  )
@@ -93,14 +117,14 @@
 			"x",
 			d3
 			  .forceX(function (d) {
-				return xScale(d.Percent);
+				return xScale(d.Values);
 			  })
 			  .strength(1)
 		  )
 		  .force(
 			"collide",
 			d3.forceCollide((d) => {
-			  return size(Math.sqrt(d["SUM(Denominator)"]));
+			  return size(Math.sqrt(d.Radius));
 			})
 		  )
 		  .alphaDecay(0)
@@ -120,7 +144,6 @@
 		  simulation.alphaDecay(0.1);
 		}, 3000);
 	  };
-	graph();
 }
 function fetchFilter() {
         // While performing async task, show loading message to user.
