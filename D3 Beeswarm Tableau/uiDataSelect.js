@@ -1,6 +1,6 @@
 //store data information
 (function () {
-    const colorSettingsKey = 'selectedColors';
+    const colorsSettingsKey = 'selectedColors';
     const columnsSettingsKey = 'selectedColumns';
     const radiusSettingsKey = 'selectedRadius';
     const valuesSettingsKey = 'selectedValues';
@@ -23,7 +23,7 @@
 			dashboard.worksheets.forEach(function (worksheet) {
 				const button = createButton(worksheet.name);
 				button.click(function () {
-					$('#color').empty();
+					$('#colors').empty();
 					$('#columns').empty();
 					$('#radius').empty();
 					$('#values').empty();
@@ -50,7 +50,7 @@
 		const textFormat3 = $('<h5>Select the radius value column:</h5>');
 		const textFormat4 = $('<h5>Select the linear value column:</h5>');
 		
-		$('#color').append(textFormat);
+		$('#colors').append(textFormat);
 		$('#columns').append(textFormat);
 		$('#radius').append(textFormat);
 		$('#values').append(textFormat);
@@ -67,7 +67,7 @@
 		
 	}
 	
-	function updateColor(id) {
+	function updateColors(id) {
 		let idIndex = selectedColors.indexOf(id);
 		
 		if (idIndex < 0) {
@@ -78,7 +78,7 @@
 	}
 
 
-	function updateColumn(id) {
+	function updateColumns(id) {
 		let idIndex = selectedColumns.indexOf(id);
 		
 		if (idIndex < 0) {
@@ -98,7 +98,7 @@
 		}
 	}	
 	
-	function updateValue(id) {
+	function updateValues(id) {
 		let idIndex = selectedValues.indexOf(id);
 		
 		if (idIndex < 0) {
@@ -120,7 +120,7 @@
 
 	function closeDialog() {
 		let currentSettings = tableau.extensions.settings.getAll();
-		tableau.extensions.settings.set(colorSettingsKey, JSON.stringify(selectedColors));
+		tableau.extensions.settings.set(colorsSettingsKey, JSON.stringify(selectedColors));
 		tableau.extensions.settings.set(columnsSettingsKey, JSON.stringify(selectedColumns));
 		tableau.extensions.settings.set(radiusSettingsKey, JSON.stringify(selectedRadius));
 		tableau.extensions.settings.set(valuesSettingsKey, JSON.stringify(selectedValues));
@@ -145,7 +145,7 @@
 			type: 'radio',
 			id: buttonTitle.index,
 			value: buttonTitle.fieldName,
-			click: function() { updateColumns(buttonTitle.index) }
+			click: function() { updateColors(buttonTitle.index) }
 		}).appendTo(containerDiv);
 
 		$('<label />', {
@@ -153,7 +153,7 @@
 			text: buttonTitle.fieldName,
 		}).appendTo(containerDiv);
 
-		$('#color').append(containerDiv);
+		$('#colors').append(containerDiv);
 	}
 	
 	function createOptionColumns (buttonTitle) {
@@ -181,7 +181,7 @@
 			type: 'radio',
 			id: buttonTitle.index,
 			value: buttonTitle.fieldName,
-			click: function() { updateColumns(buttonTitle.index) }
+			click: function() { updateRadius(buttonTitle.index) }
 		}).appendTo(containerDiv);
 
 		$('<label />', {
@@ -199,7 +199,7 @@
 			type: 'radio',
 			id: buttonTitle.index,
 			value: buttonTitle.fieldName,
-			click: function() { updateColumns(buttonTitle.index) }
+			click: function() { updateValues(buttonTitle.index) }
 		}).appendTo(containerDiv);
 
 		$('<label />', {
