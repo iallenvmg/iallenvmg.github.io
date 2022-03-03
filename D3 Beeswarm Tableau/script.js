@@ -28,10 +28,10 @@
   function plotChart(settings) {
 	  var worksheetsName = settings.sheet;
 	  const worksheet = getSelectedSheet(worksheetsName);
-	  indexColors = settings.selectedColors[1];
-	  indexColumns = settings.selectedColumns[1];
-	  indexRadius = settings.selectedRadius[1];
-	  indexValues = settings.selectedValues[1];
+	  var indexColors = settings.selectedColors[1];
+	  var indexColumns = settings.selectedColumns[1];
+	  var indexRadius = settings.selectedRadius[1];
+	  var indexValues = settings.selectedValues[1];
 	  let dataArr = [];
 	  worksheet.getSummaryDataAsync().then(data => {
 		  let dataJson;
