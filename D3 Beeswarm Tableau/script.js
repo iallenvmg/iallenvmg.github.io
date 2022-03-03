@@ -4,78 +4,29 @@
   // Event handlers for filter change
   let unregisterHandlerFunctions = [];
 
-  let worksheet1, worksheet2;
+  let savedInfo;
+  const defaultIntervalInMin = '5';
   // Use the jQuery document ready signal to know when everything has been initialized
 	
   $(document).ready(function () {
   // Initialize tableau extension
-  tableau.extensions.initializeAsync().then(function () {
-	  // Get worksheets from tableau dashboard
-	  worksheet1 = tableau.extensions.dashboardContent.dashboard.worksheets[0];
-	  worksheet2 = tableau.extensions.dashboardContent.dashboard.worksheets[1];
-	  console.log('got tableau worksheets');
-      function getDataAndPlotChart() {
-        // load data from worksheet
-		console.log('getDataAndPlot');
-        let dataArr = [];
-        worksheet1.getSummaryDataAsync().then(data => {
-          let dataJson;
-          data.data.map(d => {
-            dataJson = {};
-            dataJson[data.columns[0].fieldName] = d[0].value; //1st column 
-            dataJson[data.columns[1].fieldName] = d[1].value; //2nd column 
-            dataJson[data.columns[2].fieldName] = d[2].value; //3rd column 
-            dataJson[data.columns[3].fieldName] = d[3].value; //4th column 
-            dataArr.push(dataJson);
-          });
-		  
-		  dataArr = dataArr.filter(function(n){return n.Percent != "%null%"})
-
-
-          // converting data to heirarchical json
-		  /*
-          let formattedJson = _(dataArr)
-            .groupBy(x => x["Provider"])
-            .map((value1, key) => ({
-              name: key, count: sum(value1), children: _(value1)
-                .value()
-            }))
-            .value();
-*/
-		  console.log(dataArr);
-          plotChart(dataArr);
-        });
-      }
-
-      getDataAndPlotChart();
-
-      // event listener for filters
-      let unregisterHandlerFunction = worksheet1.addEventListener(tableau.TableauEventType.FilterChanged, filterChangedHandler);
-      unregisterHandlerFunctions.push(unregisterHandlerFunction);
-
-      function filterChangedHandler(event) {
-        // for filter change
-        // Add fieldName with (||) for other filters
-        if (event.fieldName === "Provider") {
-          // reload summary data
-          getDataAndPlotChart();
-        }
-      }
-    });
+	tableau.extensions.initializeAsync({'configure': configure}).then(function () {
+	  let currentSettings = tableau.extension.settings.getAll();
+	  fetchFilter();
+	  fetchCurrentSettings();
+	  if (typeof currentSettings.sheet !== "undefined") {
+	    $('#inactive').hide();
+		plotChart(currentSettings)
+	  }
+	});
   });
-
-  function sum(arr) {
-    let count = 0;
-    arr.forEach(element => {
-      count += parseInt(element["Percent"]);
-    });
-    return count;
-  }
+  
+  let unregisterHandlerFunction;
   
     // ========================== D3 CHART ===================== //
 
-  function plotChart(data) {
-      console.log('plotchart')
+  function plotChart(settings) {
+      console.log(settings)
 
 	  var div = d3.select("body").append("div")
 		  .attr("class", "tooltip")
