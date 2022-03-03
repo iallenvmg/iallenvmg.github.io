@@ -36,11 +36,13 @@
 	  worksheet.getSummaryDataAsync().then(data => {
 		  let dataJson;
 		  data.data.map(d => {
+			  console.log(d);
 			  dataJson = {};
 			  dataJson['Colors'] = d[indexColors].value;
-			  dataJson['Columns'] = d[indexColumns].value;
 			  dataJson['Radius'] = d[indexRadius].value;
 			  dataJson['Values'] = d[indexValues].value;
+			  dataJson['Columns'] = d[indexColumns].value;
+
 			  dataArr.push(dataJson);
 
 			   
