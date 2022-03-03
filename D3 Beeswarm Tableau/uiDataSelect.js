@@ -55,7 +55,7 @@
 		$('#radius').append(textFormat);
 		$('#values').append(textFormat);
 		
-		worksheet.getSummaryDataAsnyc().then(function(data){
+		worksheet.getSummaryDataAsync().then(function(data){
 			const columnsTable = data.columns;
 			columnsTable.forEach(function (name) {
 				const option = createOption(name);
