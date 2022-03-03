@@ -196,7 +196,7 @@ function fetchFilter() {
 
 
   function configure() { 
-      const popupUrl = `${window.location.origin}/Network/extensionBox.html`;
+      const popupUrl = `${window.location.origin}/D3 Beeswarm Tableau/extensionBox.html`;
     
       tableau.extensions.ui.displayDialogAsync(popupUrl, defaultIntervalInMin, { height: 500, width: 500 }).then((closePayload) => {
         $('#inactive').hide();
