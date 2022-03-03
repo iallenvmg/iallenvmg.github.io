@@ -11,7 +11,7 @@
   $(document).ready(function () {
   // Initialize tableau extension
 	tableau.extensions.initializeAsync({'configure': configure}).then(function () {
-	  let currentSettings = tableau.extension.settings.getAll();
+	  let currentSettings = tableau.extensions.settings.getAll();
 	  fetchFilter();
 	  fetchCurrentSettings();
 	  if (typeof currentSettings.sheet !== "undefined") {
