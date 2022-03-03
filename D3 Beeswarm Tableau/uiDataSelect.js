@@ -51,9 +51,9 @@
 		const textFormat4 = $('<h5>Select the linear value column:</h5>');
 		
 		$('#colors').append(textFormat);
-		$('#columns').append(textFormat);
-		$('#radius').append(textFormat);
-		$('#values').append(textFormat);
+		$('#columns').append(textFormat2);
+		$('#radius').append(textFormat3);
+		$('#values').append(textFormat4);
 		
 		worksheet.getSummaryDataAsync().then(function(data){
 			const columnsTable = data.columns;
