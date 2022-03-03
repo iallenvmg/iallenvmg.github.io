@@ -33,6 +33,7 @@
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
 	  let dataArr = [];
+	  console.log(indexColumns);
 	  worksheet.getSummaryDataAsync().then(data => {
 		  let dataJson;
 		  data.data.map(d => {
