@@ -145,6 +145,71 @@
 		}, 3000);
 	  };
 }
+	
+
+  function getSelectedSheet (worksheetName) {
+    // go through all the worksheets in the dashboard and find the one we want
+    return tableau.extensions.dashboardContent.dashboard.worksheets.find(function (sheet) {
+      return sheet.name === worksheetName;
+    });
+  }
+
+
+
+  function createButton (buttonTitle) {
+    const button =
+    $(`<button type='button' class='btn btn-default btn-block'>
+      ${buttonTitle}
+    </button>`);
+    return button;
+  }
+
+  // This variable will save off the function we can call to unregister listening to marks-selected events
+
+
+ 
+
+  function initializeButtons () {
+    $('#show_choose_sheet_button').click(showChooseSheetDialog);
+  }
+
+  function convertArray (tiers1,tiers2) {
+    var array = [];
+      for (var i = 0; i < tiers1.length; i++) {
+        array.push({"tiers1" :tiers1[i].value, "tiers2" : tiers2[i].value})
+      }
+    return array;
+  }
+
+  function getSelectedSheet (worksheetName) {
+    // go through all the worksheets in the dashboard and find the one we want
+    return tableau.extensions.dashboardContent.dashboard.worksheets.find(function (sheet) {
+      return sheet.name === worksheetName;
+    });
+  }
+
+  function convert(array){
+    var map = {};
+    for(var i = 0; i < array.length; i++){
+        var obj = array[i];
+        obj.items= [];
+
+        map[obj.Id] = obj;
+
+        var parent = obj.Parent || '-';
+        if(!map[parent]){
+            map[parent] = {
+                items: []
+            };
+        }
+        map[parent].items.push(obj);
+    }
+
+    return map['-'].items;
+
+}	
+	
+	
 function fetchFilter() {
         // While performing async task, show loading message to user.
         //$('#loading').addClass('show');
