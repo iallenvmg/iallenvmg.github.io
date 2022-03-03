@@ -121,4 +121,95 @@
 		}, 3000);
 	  };
 	graph();
-}})();
+}
+function fetchFilter() {
+        // While performing async task, show loading message to user.
+        //$('#loading').addClass('show');
+
+        // Whenever we restore the filters table, remove all save handling functions,
+        // since we add them back later in this function.
+        unregisterHandlerFunctions.forEach(function(unregisterHandlerFunction) {
+            unregisterHandlerFunction();
+        });
+
+        // Since filter info is attached to the worksheet, we will perform
+        // one async call per worksheet to get every filter used in this
+        // dashboard.  This demonstrates the use of Promise.all to combine
+        // promises together and wait for each of them to resolve.
+        let filterFetchPromises = [];
+
+        // List of all filters in a dashboard.
+        let dashboardfilters = [];
+
+        // To get filter info, first get the dashboard.
+        const dashboard = tableau.extensions.dashboardContent.dashboard;
+
+        // Then loop through each worksheet and get its filters, save promise for later.
+        dashboard.worksheets.forEach(function(worksheet) {
+            //filterFetchPromises.push(worksheet.getFiltersAsync());
+
+            // Add filter event to each worksheet.  AddEventListener returns a function that will
+            // remove the event listener when called.
+            let unregisterHandlerFunction = worksheet.addEventListener(tableau.TableauEventType.MarkSelectionChanged, filterChangedHandler);
+            //unregisterHandlerFunctions.push(unregisterHandlerFunction);
+        });
+    }
+
+  function filterChangedHandler(filterEvent) {
+        // Just reconstruct the filters table whenever a filter changes.
+        // This could be optimized to add/remove only the different filters.
+        //fetchFilters();
+        //reload gauge
+        d3.select("svg").remove();
+        const settingsSaved = tableau.extensions.settings.getAll();
+        plotChart(settingsSaved);
+    }
+
+   function fetchCurrentSettings() {
+        // While performing async task, show loading message to user.
+        //$('#loading').addClass('show');
+
+        // Whenever we restore the filters table, remove all save handling functions,
+        // since we add them back later in this function.
+        unregisterHandlerFunctions.forEach(function(unregisterHandlerFunction) {
+            unregisterHandlerFunction();
+        });
+
+        // Since filter info is attached to the worksheet, we will perform
+        // one async call per worksheet to get every filter used in this
+        // dashboard.  This demonstrates the use of Promise.all to combine
+        // promises together and wait for each of them to resolve.
+        let filterFetchPromises = [];
+
+        // List of all filters in a dashboard.
+        let dashboardfilters = [];
+
+        // To get filter info, first get the dashboard.
+        const dashboard = tableau.extensions.dashboardContent.dashboard;
+
+        tableau.extensions.settings.addEventListener(tableau.TableauEventType.SettingsChanged, (settingsEvent) => {
+            //console.log(settingsEvent);
+            //updateExtensionBasedOnSettings(settingsEvent.newSettings);
+            plotChart(settingsEvent.newSettings);
+        });
+    }
+
+
+  function configure() { 
+      const popupUrl = `${window.location.origin}/Network/extensionDialog.html`;
+    
+      tableau.extensions.ui.displayDialogAsync(popupUrl, defaultIntervalInMin, { height: 500, width: 500 }).then((closePayload) => {
+        $('#inactive').hide();
+        $('#active').show();
+
+        // The close payload is returned from the popup extension via the closeDialog method.
+        
+
+    }).catch((error) => {
+      //  ... 
+      // ... code for error handling
+      
+    });
+  }
+
+})();
