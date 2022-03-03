@@ -26,8 +26,8 @@
     // ========================== D3 CHART ===================== //
 
   function plotChart(settings) {
-      console.log(settings)
-
+      console.log(settings);
+      console.log(settings.selectedColumns[1]);
 	  var div = d3.select("body").append("div")
 		  .attr("class", "tooltip")
 		  .style("opacity", 0);
