@@ -135,6 +135,8 @@
 	function closeDialog() {
 		updateColorDict(document.getElementById('colorDictID').value)
 		let currentSettings = tableau.extensions.settings.getAll();
+		console.log(selectedColors);
+		console.log(selectedColorDict);
 		tableau.extensions.settings.set(colorsSettingsKey, JSON.stringify(selectedColors));
 		tableau.extensions.settings.set(columnsSettingsKey, JSON.stringify(selectedColumns));
 		tableau.extensions.settings.set(radiusSettingsKey, JSON.stringify(selectedRadius));
