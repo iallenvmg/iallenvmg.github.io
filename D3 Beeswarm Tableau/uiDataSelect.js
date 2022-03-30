@@ -4,10 +4,12 @@
     const columnsSettingsKey = 'selectedColumns';
     const radiusSettingsKey = 'selectedRadius';
     const valuesSettingsKey = 'selectedValues';
+	const colorDictSettingsKey = 'selectedColorDict';
 	let selectedColors = [];
 	let selectedColumns = [];
 	let selectedRadius = [];
 	let selectedValues = [];
+	let selectedColorDict = [];
 	let selectedSheet = [];
 	
 	
@@ -27,6 +29,7 @@
 					$('#columns').empty();
 					$('#radius').empty();
 					$('#values').empty();
+					$('#colorDict').empty();
 					
 					let worksheetName = worksheet.name;
 					tableau.extensions.settings.set('sheet',worksheetName);
@@ -49,11 +52,13 @@
 		const textFormat2 = $('<h5>Select the index grouping column:</h5>');
 		const textFormat3 = $('<h5>Select the radius value column:</h5>');
 		const textFormat4 = $('<h5>Select the linear value column:</h5>');
+		const textFormat5 = $("<h5>Enter a list of colors ['#hex','#hex',...]:</h5>");
 		
 		$('#colors').append(textFormat);
 		$('#columns').append(textFormat2);
 		$('#radius').append(textFormat3);
 		$('#values').append(textFormat4);
+		$('#colorDict').append(textFormat5);
 		
 		worksheet.getSummaryDataAsync().then(function(data){
 			const columnsTable = data.columns;
@@ -63,6 +68,7 @@
 				const option3 = createOptionRadius(name);
 				const option4 = createOptionValues(name);
 			});
+			const option5 = createOptionColorDict
 		});
 		
 	}
@@ -107,6 +113,16 @@
 			selectedValues.splice(idIndex,1);
 		}
 	}
+
+	function updateColorDict(id) {
+		let idIndex = selectedColorDict.indexOf(id);
+		
+		if (idIndex < 0) {
+			selectedColorDict.push(id);
+		} else {
+			selectedColorDict.splice(idIndex,1);
+		}
+	}
 	
 	function updateData(id) {
 		let idIndex = selectedSheet.indexOf(id);
@@ -124,6 +140,7 @@
 		tableau.extensions.settings.set(columnsSettingsKey, JSON.stringify(selectedColumns));
 		tableau.extensions.settings.set(radiusSettingsKey, JSON.stringify(selectedRadius));
 		tableau.extensions.settings.set(valuesSettingsKey, JSON.stringify(selectedValues));
+		tableau.extensions.settings.set(colorDictSettingsKey, JSON.stringify(selectedColorDict));
 
 		tableau.extensions.settings.saveAsync().then((newSavedSettings) => {
 			tableau.extensions.ui.closeDialog("test");
@@ -210,6 +227,23 @@
 		$('#values').append(containerDiv);
 	}
 
+    function createOptionDataDict (buttonTitle) {
+		let containerDiv = $('<div />');
+
+		$('<input />', {
+			type: 'text',
+			id: buttonTitle.index,
+			click: function() { updateValues(buttonTitle.index) }
+		}).appendTo(containerDiv);
+
+		$('<label />', {
+			'for': buttonTitle.index,
+			text: buttonTitle.fieldName,
+		}).appendTo(containerDiv);
+
+		$('#values').append(containerDiv);
+	}	
+	
 	function getSelectedSheet (worksheetName) {
     // go through all the worksheets in the dashboard and find the one we want
 		return tableau.extensions.dashboardContent.dashboard.worksheets.find(function (sheet) {
