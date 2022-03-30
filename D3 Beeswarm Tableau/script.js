@@ -33,7 +33,7 @@
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
 	  console.log(settings.selectedColorDict);
-	  var colorDict = settings.selectedColorDict[0].split(',');
+	  var colorDict = settings.selectedColorDict[0].replace('"','').split(',');
 	  console.log(colorDict)
 	  let dataArr = [];
 	  console.log(indexColumns);
