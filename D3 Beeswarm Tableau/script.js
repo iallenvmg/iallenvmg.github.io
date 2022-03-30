@@ -32,7 +32,7 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
-	  var colorDict = settings.selectedColorDict;
+	  var colorDict = settings.selectedColorDict.split(',');
 	  console.log(colorDict)
 	  let dataArr = [];
 	  console.log(indexColumns);
