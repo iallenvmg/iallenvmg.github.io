@@ -114,13 +114,11 @@
 		}
 	}
 
-	function updateColorDict(id) {
-		let idIndex = selectedColorDict.indexOf(id);
-		
-		if (idIndex < 0) {
+	function updateColorDict(id) {		
+		try {
 			selectedColorDict.push(id);
-		} else {
-			selectedColorDict.splice(idIndex,1);
+		} catch(error) {
+			selectedColorDict.push("['#000000']");
 		}
 	}
 	
@@ -135,6 +133,7 @@
 
 
 	function closeDialog() {
+		updateColorDict(document.getElementById('colorDictID').value)
 		let currentSettings = tableau.extensions.settings.getAll();
 		tableau.extensions.settings.set(colorsSettingsKey, JSON.stringify(selectedColors));
 		tableau.extensions.settings.set(columnsSettingsKey, JSON.stringify(selectedColumns));
@@ -227,21 +226,14 @@
 		$('#values').append(containerDiv);
 	}
 
-    function createOptionColorDict (buttonTitle) {
+    function createOptionColorDict () {
 		let containerDiv = $('<div />');
 
 		$('<input />', {
 			type: 'text',
-			id: buttonTitle.index,
+			id: 'colorDictID'
 			click: function() { updateValues(buttonTitle.index) }
 		}).appendTo(containerDiv);
-
-		$('<label />', {
-			'for': buttonTitle.index,
-			text: buttonTitle.fieldName,
-		}).appendTo(containerDiv);
-
-		$('#values').append(containerDiv);
 	}	
 	
 	function getSelectedSheet (worksheetName) {
