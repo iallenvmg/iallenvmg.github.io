@@ -227,7 +227,7 @@
 		$('#values').append(containerDiv);
 	}
 
-    function createOptioncolorDict (buttonTitle) {
+    function createOptionColorDict (buttonTitle) {
 		let containerDiv = $('<div />');
 
 		$('<input />', {
