@@ -232,7 +232,6 @@
 		$('<input />', {
 			type: 'text',
 			id: 'colorDictID'
-			click: function() { updateValues(buttonTitle.index) }
 		}).appendTo(containerDiv);
 	}	
 	
