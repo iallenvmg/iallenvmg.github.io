@@ -32,6 +32,8 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
+	  var colorDict = settings.selectedColorDict;
+	  console.log(colorDict)
 	  let dataArr = [];
 	  console.log(indexColumns);
 	  worksheet.getSummaryDataAsync().then(data => {
@@ -81,7 +83,7 @@
 		  //.domain(d3.extent(data.map((d) => +d["Values"])))
 		  .range([width - 50, 50]);
 
-		let color = d3.scaleOrdinal().domain(Colors).range(d3.schemePaired);
+		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
 		let percentAxis = d3.axisBottom(xScale).tickFormat(d3.format(",.0%"));
 		
