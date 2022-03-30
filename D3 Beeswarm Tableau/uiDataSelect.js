@@ -233,6 +233,8 @@
 			type: 'text',
 			id: 'colorDictID'
 		}).appendTo(containerDiv);
+    		$('#colorDict').append(containerDiv);
+
 	}	
 	
 	function getSelectedSheet (worksheetName) {
