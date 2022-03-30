@@ -68,7 +68,7 @@
 				const option3 = createOptionRadius(name);
 				const option4 = createOptionValues(name);
 			});
-			const option5 = createOptionColorDict
+			const option5 = createOptionColorDict();
 		});
 		
 	}
@@ -227,7 +227,7 @@
 		$('#values').append(containerDiv);
 	}
 
-    function createOptionDataDict (buttonTitle) {
+    function createOptioncolorDict (buttonTitle) {
 		let containerDiv = $('<div />');
 
 		$('<input />', {
