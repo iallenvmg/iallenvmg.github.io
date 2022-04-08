@@ -313,7 +313,7 @@ function fetchFilter() {
         const settingsSaved = tableau.extensions.settings.getAll();
         plotChart(settingsSaved);
     }
-  function filterChangedHandler(filterEvent) {
+  function parameterChangedHandler(filterEvent) {
         //d3.select("svg").remove();
         const settingsSaved = tableau.extensions.settings.getAll();
         //plotChart(settingsSaved);
