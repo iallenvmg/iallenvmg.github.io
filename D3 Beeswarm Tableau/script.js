@@ -13,6 +13,7 @@
 	tableau.extensions.initializeAsync({'configure': configure}).then(function () {
 	  let currentSettings = tableau.extensions.settings.getAll();
 	  fetchFilter();
+	  fetchParameter();
 	  fetchCurrentSettings();
 	  if (typeof currentSettings.sheet !== "undefined") {
 	    $('#inactive').hide();
@@ -103,7 +104,9 @@
 		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
 		  .attr("cy", (d) => yScale(d.Values))
 		  .attr("cx", (d) => xScale(d.Colors))
-		  .on("mouseover",function(d) {tooltipDisplay(d.Columns)});
+		  .on("mouseover",function(d) {tooltipDisplay(d.Columns);
+				d3.select(this).attr("fill","red").attr("opacity", 1);})
+		  .on("mouseout",function(d) {d3.select(this).attr("fill",color(d.Colors)).attr("opacity", 0.5)});
 
 		  
 		svg
@@ -173,7 +176,7 @@
 			console.log(tooltipData)
 			
 			var displayColumns = "Provider: " + tooltipData[0].Columns;
-			var displayValue = "Value: " + tooltipData[0].Values;
+			var displayValue = "Value: " + d3.format(",.0%")(tooltipData[0].Values);
 			var displayRadius = "Denominator: " + tooltipData[0].Radius;
 
 			
@@ -283,11 +286,24 @@ function fetchFilter() {
 
             // Add filter event to each worksheet.  AddEventListener returns a function that will
             // remove the event listener when called.
-            let unregisterHandlerFunction = worksheet.addEventListener(tableau.TableauEventType.MarkSelectionChanged, filterChangedHandler);
+            let unregisterHandlerFunction = worksheet.addEventListener(tableau.TableauEventType.FilterChanged, filterChangedHandler);
             //unregisterHandlerFunctions.push(unregisterHandlerFunction);
         });
     }
 
+  function fetchParameter() {
+        unregisterHandlerFunctions.forEach(function(unregisterHandlerFunction) {
+            unregisterHandlerFunction();
+        });		
+        let parameterFetchPromises = [];
+        let dashboardparameters = [];
+        const dashboard = tableau.extensions.dashboardContent.dashboard;
+        dashboard.worksheets.forEach(function(worksheet) {
+            let unregisterHandlerFunction = worksheet.addEventListener(tableau.TableauEventType.ParameterChanged, parameterChangedHandler);
+            //unregisterHandlerFunctions.push(unregisterHandlerFunction);
+        });		
+	}
+	
   function filterChangedHandler(filterEvent) {
         // Just reconstruct the filters table whenever a filter changes.
         // This could be optimized to add/remove only the different filters.
@@ -297,7 +313,12 @@ function fetchFilter() {
         const settingsSaved = tableau.extensions.settings.getAll();
         plotChart(settingsSaved);
     }
-
+  function filterChangedHandler(filterEvent) {
+        //d3.select("svg").remove();
+        const settingsSaved = tableau.extensions.settings.getAll();
+        //plotChart(settingsSaved);
+    }
+	
    function fetchCurrentSettings() {
         // While performing async task, show loading message to user.
         //$('#loading').addClass('show');
