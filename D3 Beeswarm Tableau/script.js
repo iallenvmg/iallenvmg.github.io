@@ -32,7 +32,7 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
-	  console.log(settings.selectedColorDict);
+	  console.log(settings);
 	  var colorDict = settings.selectedColorDict[0].replace('"','').split(',');
 	  console.log(colorDict)
 	  let dataArr = [];
@@ -41,7 +41,7 @@
 		  let dataJson;
 		  data.data.map(d => {
 			  console.log(d);
-			  console.log(indexRadius);
+			  console.log(indexColors,indexRadius,indexValues,indexColumns);
 			  dataJson = {};
 			  dataJson['Colors'] = d[indexColors].value;
 			  dataJson['Radius'] = d[indexRadius].value;
