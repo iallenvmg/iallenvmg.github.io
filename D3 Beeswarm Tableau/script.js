@@ -55,8 +55,7 @@
 		  graph(dataArr);
 	  });
 	  
-	  var focus = svg.append("g")
-					.attr("class","focus-line label")
+
 	  
 	  var div = d3.select("body").append("div")
 		  .attr("class", "tooltip")
@@ -112,20 +111,20 @@
 		  .attr("transform","translate("+width/2+",0)")
 		  .call(percentAxis);
 		  
-		var focus = svg.append("g")
+		var toolTipBar = svg.append("g")
 			.attr("class","focus-label");
 			
-		focus.append("text")
+		toolTipBar.append("text")
 			.attr("class","bee-columns")
 			.attr("x",9)
 			.attr("dy","1.35em")
 			.style("font-size",15);
-		focus.append("text")
+		toolTipBar.append("text")
 			.attr("class","bee-values")
 			.attr("x",9)
 			.attr("dy","2.7em")
 			.style("font-size",15);
-		focus.append("text")
+		toolTipBar.append("text")
 			.attr("class","bee-radius")
 			.attr("x",9)
 			.attr("dy","4.05em")
