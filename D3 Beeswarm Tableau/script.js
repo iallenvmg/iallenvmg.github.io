@@ -63,8 +63,8 @@
 		  .attr("class", "tooltip")
 		  .style("opacity", 0);
 
-	  var width = 1200,
-		  height = 600;
+	  var width = $(window).width(),
+		  height = $(window).height();
 	  
 	  function graph(data) {
 		d3.select("svg").remove();
@@ -75,19 +75,19 @@
 			//.attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");		  
 
 		let Colors = Array.from(new Set(data.map((d) => d.Colors)));
-		//let yCoords = Colors.map((d, i) => (i+1) * (height/(Colors.length+2)));
-		let yCoords = Colors.map((d,i) => height/2);
-		let yScale = d3.scaleOrdinal().domain(Colors).range(yCoords);
+		//let xCoords = Colors.map((d, i) => (i+1) * (width/(Colors.length+2)));
+		let xCoords = Colors.map((d,i) => width/2);
+		let xScale = d3.scaleOrdinal().domain(Colors).range(xCoords);
 
-		let xScale = d3
+		let yScale = d3
 		  .scaleLinear()
 		  .domain([1,0])
 		  //.domain(d3.extent(data.map((d) => +d["Values"])))
-		  .range([width - 50, 50]);
+		  .range([height - 50, 50]);
 
 		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
-		let percentAxis = d3.axisBottom(xScale).tickFormat(d3.format(",.0%"));
+		let percentAxis = d3.axisBottom(yScale).tickFormat(d3.format(",.0%"));
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
@@ -102,8 +102,8 @@
 		  .attr("stroke", "black")
 		  .attr("fill", (d) => color(d.Colors))
 		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
-		  .attr("cy", (d) => yScale(d.Colors))
-		  .attr("cx", (d) => xScale(d.Values));
+		  .attr("cy", (d) => yScale(d.Values))
+		  .attr("cx", (d) => xScale(d.Colors));
 
 		  
 		svg
@@ -116,17 +116,17 @@
 			"y",
 			d3
 			  .forceY((d) => {
-				return yScale(d.Colors);
+				return yScale(d.Values);
 			  })
-			  .strength(0.2)
+			  .strength(1)
 		  )
 		  .force(
 			"x",
 			d3
 			  .forceX(function (d) {
-				return xScale(d.Values);
+				return xScale(d.Colors);
 			  })
-			  .strength(1)
+			  .strength(0.2)
 		  )
 		  .force(
 			"collide",
@@ -140,10 +140,10 @@
 
 		function tick() {
 		  d3.selectAll(".circ")
-			.attr("cy", (d) => {
-			  return d.y;
+			.attr("cx", (d) => {
+			  return d.x;
 			})
-			.attr("cx", (d) => d.x);
+			.attr("cxy (d) => d.y);
 		}
 
 		let init_decay = setTimeout(function () {
