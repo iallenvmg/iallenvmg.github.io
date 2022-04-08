@@ -143,7 +143,7 @@
 			.attr("cx", (d) => {
 			  return d.x;
 			})
-			.attr("cy" (d) => d.y);
+			.attr("cy", (d) => d.y);
 		}
 
 		let init_decay = setTimeout(function () {
