@@ -33,7 +33,7 @@
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
 	  console.log(settings);
-	  var colorDict = settings.selectedColorDict[0].replace('"','').split(',');
+	  var colorDict = settings.selectedColorDict[0].replace('"','').replace('[','').replace(']','').split(',');
 	  console.log(colorDict)
 	  let dataArr = [];
 	  console.log(indexColumns);
@@ -87,7 +87,7 @@
 
 		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
-		let percentAxis = d3.axisBottom(yScale).tickFormat(d3.format(",.0%"));
+		let percentAxis = d3.axisRight(yScale).tickFormat(d3.format(",.0%"));
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
@@ -99,8 +99,9 @@
 		  .enter()
 		  .append("circle")
 		  .attr("class", "circ")
-		  .attr("stroke", "black")
+		  .attr("stroke", (d) => color(d.Colors))
 		  .attr("fill", (d) => color(d.Colors))
+		  .aatr("opacity", 0.5)
 		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
 		  .attr("cy", (d) => yScale(d.Values))
 		  .attr("cx", (d) => xScale(d.Colors));
@@ -108,6 +109,7 @@
 		  
 		svg
 		  .append('g')
+		  .attr("transform","translate(-"+width/2+",0)")
 		  .call(percentAxis);
 		  
 		let simulation = d3
