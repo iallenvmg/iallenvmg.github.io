@@ -113,7 +113,7 @@
 		  .call(percentAxis);
 		  
 		var focus = svg.append("g")
-			.attr("class","focus-line label");
+			.attr("class","focus-label");
 			
 		focus.append("text")
 			.attr("class","bee-columns")
@@ -171,17 +171,17 @@
 		
 		function tooltipDisplay(changeColumns) {
 			var tooltipData = dataArr.filter(function(n){return n.Columns == changeColumns});
+			console.log(tooltipData)
+			
+			var displayColumns = "Provider: " + tooltipData[0].Columns;
+			var displayValue = "Value: " + tooltipData[0].Values;
+			var displayRadius = "Denominator: " + tooltipData[0].Radius;
 
 			
-			var displayColumns = "Provider: " + tooltipData.Columns[0]
-			var displayValue = "Value: " + tooltipData.Values[0]
-			var displayRadius = "Denominator: " + tooltipData.Radius[0]
-
 			
-			
-			focus.select(".bee-columns").text(displayColumns)
-			focus.select(".bee-values").text(displayValue)
-			focus.select(".bee-radius").text(displayRadius)
+			focus.select(".bee-columns").text(displayColumns);
+			focus.select(".bee-values").text(displayValue);
+			focus.select(".bee-radius").text(displayRadius);
 			
 		}
 
