@@ -298,8 +298,7 @@ function fetchFilter() {
         let parameterFetchPromises = [];
         let dashboardparameters = [];
         const dashboard = tableau.extensions.dashboardContent.dashboard;
-        dashboard.worksheets.forEach(function(worksheet) {
-            let unregisterHandlerFunction = worksheet.addEventListener(tableau.TableauEventType.ParameterChanged, parameterChangedHandler);
+	let unregisterHandlerFunction = dashboard.addEventListener(tableau.TableauEventType.ParameterChanged, parameterChangedHandler);
             //unregisterHandlerFunctions.push(unregisterHandlerFunction);
         });		
 	}
