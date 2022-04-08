@@ -298,8 +298,12 @@ function fetchFilter() {
         let parameterFetchPromises = [];
         let dashboardparameters = [];
         const dashboard = tableau.extensions.dashboardContent.dashboard;
-	let unregisterHandlerFunction = dashboard.addEventListener(tableau.TableauEventType.ParameterChanged, parameterChangedHandler);
-            //unregisterHandlerFunctions.push(unregisterHandlerFunction);	
+        dashboard.getParametersAsync().then(function(parameters) { parameters.forEach(function(p) {
+		console.log(p);
+		let unregisterHandlerFunction = p.addEventListener(tableau.TableauEventType.ParameterChanged, parameterChangedHandler);
+            //unregisterHandlerFunctions.push(unregisterHandlerFunction);
+		    });
+	    });
 	}
 	
   function filterChangedHandler(filterEvent) {
