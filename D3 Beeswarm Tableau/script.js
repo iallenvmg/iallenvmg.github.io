@@ -33,7 +33,7 @@
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
 	  console.log(settings);
-	  var colorDict = settings.selectedColorDict[0].replace('"','').replace('[','').replace(']','').split(',');
+	  var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').split(',');
 	  console.log(colorDict)
 	  let dataArr = [];
 	  worksheet.getSummaryDataAsync().then(data => {
@@ -61,8 +61,8 @@
 		  .attr("class", "tooltip")
 		  .style("opacity", 0);
 
-	  var width = $(window).width(),
-		  height = $(window).height();
+	  var width = $(window).width()-25,
+		  height = $(window).height()-25;
 	  
 	  function graph(data) {
 		d3.select("svg").remove();
@@ -79,7 +79,7 @@
 
 		let yScale = d3
 		  .scaleLinear()
-		  .domain([1,0])
+		  .domain([0,1])
 		  //.domain(d3.extent(data.map((d) => +d["Values"])))
 		  .range([height - 50, 50]);
 
@@ -178,9 +178,9 @@
 
 			
 			
-			focus.select(".bee-columns").text(displayColumns);
-			focus.select(".bee-values").text(displayValue);
-			focus.select(".bee-radius").text(displayRadius);
+			toolTipBar.select(".bee-columns").text(displayColumns);
+			toolTipBar.select(".bee-values").text(displayValue);
+			toolTipBar.select(".bee-radius").text(displayRadius);
 			
 		}
 
