@@ -299,8 +299,7 @@ function fetchFilter() {
         let dashboardparameters = [];
         const dashboard = tableau.extensions.dashboardContent.dashboard;
 	let unregisterHandlerFunction = dashboard.addEventListener(tableau.TableauEventType.ParameterChanged, parameterChangedHandler);
-            //unregisterHandlerFunctions.push(unregisterHandlerFunction);
-        });		
+            //unregisterHandlerFunctions.push(unregisterHandlerFunction);	
 	}
 	
   function filterChangedHandler(filterEvent) {
