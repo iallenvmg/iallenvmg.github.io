@@ -315,7 +315,8 @@ function fetchFilter() {
         plotChart(settingsSaved);
     }
   function parameterChangedHandler(parameterEvent) {
-	if (parameterEvent.name != "Provider Parameter" {
+	console.log(parameterEvent)
+	if (parameterEvent.name != "Provider Parameter") {
 		d3.select("svg").remove();
 		const settingsSaved = tableau.extensions.settings.getAll();
 		plotChart(settingsSaved);	    
