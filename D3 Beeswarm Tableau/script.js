@@ -41,6 +41,7 @@
 		  let dataJson;
 		  data.data.map(d => {
 			  console.log(d);
+			  console.log(indexRadius);
 			  dataJson = {};
 			  dataJson['Colors'] = d[indexColors].value;
 			  dataJson['Radius'] = d[indexRadius].value;
