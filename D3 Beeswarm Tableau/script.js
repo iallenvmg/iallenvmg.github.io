@@ -32,7 +32,7 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
-	  console.log(settings);
+	  console.log(settings.selectedColorDict);
 	  var colorDict = settings.selectedColorDict[0].replace('"','').replace('[','').replace(']','').split(',');
 	  console.log(colorDict)
 	  let dataArr = [];
@@ -101,7 +101,7 @@
 		  .attr("class", "circ")
 		  .attr("stroke", (d) => color(d.Colors))
 		  .attr("fill", (d) => color(d.Colors))
-		  .aatr("opacity", 0.5)
+		  .attr("opacity", 0.5)
 		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
 		  .attr("cy", (d) => yScale(d.Values))
 		  .attr("cx", (d) => xScale(d.Colors));
