@@ -173,7 +173,6 @@
 		
 		function tooltipDisplay(changeColumns) {
 			var tooltipData = dataArr.filter(function(n){return n.Columns == changeColumns});
-			console.log(tooltipData)
 			
 			var displayColumns = "Provider: " + tooltipData[0].Columns;
 			var displayValue = "Value: " + d3.format(",.0%")(tooltipData[0].Values);
@@ -315,10 +314,13 @@ function fetchFilter() {
         const settingsSaved = tableau.extensions.settings.getAll();
         plotChart(settingsSaved);
     }
-  function parameterChangedHandler(filterEvent) {
-        //d3.select("svg").remove();
-        const settingsSaved = tableau.extensions.settings.getAll();
-        //plotChart(settingsSaved);
+  function parameterChangedHandler(parameterEvent) {
+	if (parameterEvent.name != "Provider Parameter" {
+		d3.select("svg").remove();
+		const settingsSaved = tableau.extensions.settings.getAll();
+		plotChart(settingsSaved);	    
+	    }  
+
     }
 	
    function fetchCurrentSettings() {
