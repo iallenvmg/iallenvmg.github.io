@@ -32,16 +32,13 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
-	  console.log(settings.selectedColorDict);
+	  console.log(settings);
 	  var colorDict = settings.selectedColorDict[0].replace('"','').replace('[','').replace(']','').split(',');
 	  console.log(colorDict)
 	  let dataArr = [];
-	  console.log(indexColumns);
 	  worksheet.getSummaryDataAsync().then(data => {
 		  let dataJson;
 		  data.data.map(d => {
-			  console.log(d);
-			  console.log(indexColors,indexRadius,indexValues,indexColumns);
 			  dataJson = {};
 			  dataJson['Colors'] = d[indexColors].value;
 			  dataJson['Radius'] = d[indexRadius].value;
@@ -54,10 +51,12 @@
 		  });
 		  
 		  dataArr = dataArr.filter(function(n){return n.Values != "%null%"});
+		  console.log(dataArr)
 		  graph(dataArr);
 	  });
 	  
-	  
+	  var focus = svg.append("g")
+					.attr("class","focus-line label")
 	  
 	  var div = d3.select("body").append("div")
 		  .attr("class", "tooltip")
@@ -104,14 +103,36 @@
 		  .attr("opacity", 0.5)
 		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
 		  .attr("cy", (d) => yScale(d.Values))
-		  .attr("cx", (d) => xScale(d.Colors));
+		  .attr("cx", (d) => xScale(d.Colors))
+		  .on("mouseover",function(d) {tooltipDisplay(d.Columns)});
 
 		  
 		svg
 		  .append('g')
-		  .attr("transform","translate(-"+width/2+",0)")
+		  .attr("transform","translate("+width/2+",0)")
 		  .call(percentAxis);
 		  
+		var focus = svg.append("g")
+			.attr("class","focus-line label");
+			
+		focus.append("text")
+			.attr("class","bee-columns")
+			.attr("x",9)
+			.attr("dy","1.35em")
+			.style("font-size",15);
+		focus.append("text")
+			.attr("class","bee-values")
+			.attr("x",9)
+			.attr("dy","2.7em")
+			.style("font-size",15);
+		focus.append("text")
+			.attr("class","bee-radius")
+			.attr("x",9)
+			.attr("dy","4.05em")
+			.style("font-size",15);
+
+
+			
 		let simulation = d3
 		  .forceSimulation(data)
 		  .force(
@@ -146,6 +167,22 @@
 			  return d.x;
 			})
 			.attr("cy", (d) => d.y);
+		}
+		
+		function tooltipDisplay(changeColumns) {
+			var tooltipData = dataArr.filter(function(n){return n.Columns == changeColumns});
+
+			
+			var displayColumns = "Provider: " + tooltipData.Columns[0]
+			var displayValue = "Value: " + tooltipData.Values[0]
+			var displayRadius = "Denominator: " + tooltipData.Radius[0]
+
+			
+			
+			focus.select(".bee-columns").text(displayColumns)
+			focus.select(".bee-values").text(displayValue)
+			focus.select(".bee-radius").text(displayRadius)
+			
 		}
 
 		let init_decay = setTimeout(function () {
