@@ -98,14 +98,14 @@
 		  .enter()
 		  .append("circle")
 		  .attr("class", "circ")
+		  .attr("id",(d) => d.Columns)
 		  .attr("stroke", (d) => color(d.Colors))
 		  .attr("fill", (d) => color(d.Colors))
 		  .attr("opacity", 0.5)
 		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
 		  .attr("cy", (d) => yScale(d.Values))
 		  .attr("cx", (d) => xScale(d.Colors))
-		  .on("mouseover",function(d) {tooltipDisplay(d.Columns);
-				d3.select(this).attr("fill","red").attr("opacity", 1);})
+		  .on("mouseover",function(d) {tooltipDisplay(d.Columns);})
 		  .on("mouseout",function(d) {d3.select(this).attr("fill",color(d.Colors)).attr("opacity", 0.5)});
 
 		  
@@ -172,6 +172,9 @@
 		}
 		
 		function tooltipDisplay(changeColumns) {
+			d3.select("#"+changeColumns)
+				.attr("fill","red").attr("opacity", 1)
+			
 			var tooltipData = dataArr.filter(function(n){return n.Columns == changeColumns});
 			
 			var displayColumns = "Provider: " + tooltipData[0].Columns;
@@ -299,7 +302,8 @@ function fetchFilter() {
         const dashboard = tableau.extensions.dashboardContent.dashboard;
         dashboard.getParametersAsync().then(function(parameters) { parameters.forEach(function(p) {
 		console.log(p);
-		let unregisterHandlerFunction = p.addEventListener(tableau.TableauEventType.ParameterChanged, parameterChangedHandler);
+		let unregisterHandlerFunction = p.addEventListener(tableau.TableauEventType.ParameterChanged, function(parameterEvent) { 
+			parameterChangedHandler(parameterEvent,p.name);});
             //unregisterHandlerFunctions.push(unregisterHandlerFunction);
 		    });
 	    });
@@ -314,13 +318,18 @@ function fetchFilter() {
         const settingsSaved = tableau.extensions.settings.getAll();
         plotChart(settingsSaved);
     }
-  function parameterChangedHandler(parameterEvent) {
-	console.log(parameterEvent)
-	if (parameterEvent.name != "Provider Parameter") {
+  function parameterChangedHandler(parameterEvent,parameter) {
+	if (parameter.name != "Provider Parameter") {
 		d3.select("svg").remove();
 		const settingsSaved = tableau.extensions.settings.getAll();
 		plotChart(settingsSaved);	    
-	    }  
+	    }  else {
+	    	svg.selectAll(".circ")
+		    .attr("fill",color(d.Colors))
+		    .attr("opacity", 0.5);
+		    
+		tooltipDisplay(parameter.currentValue.value)    
+	    }
 
     }
 	
