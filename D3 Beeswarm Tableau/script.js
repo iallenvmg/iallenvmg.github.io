@@ -177,7 +177,6 @@
 				.attr("fill","red").attr("opacity", 1)
 			
 			var tooltipData = dataArr.filter(function(n){return n.Columns == changeColumns});
-			console.log(tooltipData);
 			var displayColumns = "Provider: " + tooltipData[0].Columns;
 			var displayValue = "Value: " + d3.format(",.0%")(tooltipData[0].Values);
 			var displayRadius = "Denominator: " + tooltipData[0].Radius;
@@ -304,7 +303,7 @@ function fetchFilter() {
         dashboard.getParametersAsync().then(function(parameters) { parameters.forEach(function(p) {
 		console.log(p);
 		let unregisterHandlerFunction = p.addEventListener(tableau.TableauEventType.ParameterChanged, function(parameterEvent) { 
-			parameterChangedHandler(parameterEvent,p.name);});
+			parameterChangedHandler(parameterEvent,p);});
             //unregisterHandlerFunctions.push(unregisterHandlerFunction);
 		    });
 	    });
