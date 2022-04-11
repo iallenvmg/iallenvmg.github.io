@@ -172,11 +172,12 @@
 		}
 		
 		function tooltipDisplay(changeColumns) {
+			
 			d3.select("#"+changeColumns)
 				.attr("fill","red").attr("opacity", 1)
 			
 			var tooltipData = dataArr.filter(function(n){return n.Columns == changeColumns});
-			
+			console.log(tooltipData);
 			var displayColumns = "Provider: " + tooltipData[0].Columns;
 			var displayValue = "Value: " + d3.format(",.0%")(tooltipData[0].Values);
 			var displayRadius = "Denominator: " + tooltipData[0].Radius;
@@ -319,6 +320,7 @@ function fetchFilter() {
         //plotChart(settingsSaved);
     }
   function parameterChangedHandler(parameterEvent,parameter) {
+	console.log(parameter,parameter.name)
 	if (parameter.name != "Provider Parameter") {
 		d3.select("svg").remove();
 		const settingsSaved = tableau.extensions.settings.getAll();
