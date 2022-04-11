@@ -172,7 +172,7 @@
 		}
 		
 		function tooltipDisplay(changeColumns) {
-			
+			console.log(changeColumns);
 			d3.select("#"+changeColumns)
 				.attr("fill","red").attr("opacity", 1)
 			
@@ -319,7 +319,7 @@ function fetchFilter() {
         //plotChart(settingsSaved);
     }
   function parameterChangedHandler(parameterEvent,parameter) {
-	console.log(parameter,parameter.name)
+	console.log(parameter.currentValue.value)
 	if (parameter.name != "Provider Parameter") {
 		d3.select("svg").remove();
 		const settingsSaved = tableau.extensions.settings.getAll();
