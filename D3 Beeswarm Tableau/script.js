@@ -314,9 +314,9 @@ function fetchFilter() {
         // This could be optimized to add/remove only the different filters.
         //fetchFilters();
         //reload gauge
-        d3.select("svg").remove();
+        //d3.select("svg").remove();
         const settingsSaved = tableau.extensions.settings.getAll();
-        plotChart(settingsSaved);
+        //plotChart(settingsSaved);
     }
   function parameterChangedHandler(parameterEvent,parameter) {
 	if (parameter.name != "Provider Parameter") {
