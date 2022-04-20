@@ -109,7 +109,8 @@
 		  .on("mouseover",function(d) {tooltipDisplay(d.Columns);})
 		  .on("mouseout",function(d) {d3.select(this).attr("fill",color(d.Colors)).attr("opacity", 0.5)});
 		
-		let colorLabels = [...new Set(data.map(d => d.Colors)).sort()];
+		let colorLabels = [...new Set(data.map(d => d.Colors))];
+		colorLabels = colorLabels.sort()
 		svg.selectAll("labelcirc")
 		  .data(colorLabels)
 		  .enter()
