@@ -87,11 +87,11 @@
 
 		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
-		let percentAxis = d3.axisRight(yScale).tickFormat(d3.format(",.0%"));
+		let percentAxis = d3.axisRight(yScale).tickSize(-width).tickFormat(d3.format(",.0%"));
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
-		let size = d3.scaleLinear().domain(radiusDomain).range([2, 17]);
+		let size = d3.scaleLinear().domain(radiusDomain).range([3, 17]);
 
 		svg
 		  .selectAll(".circ")
@@ -109,11 +109,33 @@
 		  .on("mouseover",function(d) {tooltipDisplay(d.Columns);})
 		  .on("mouseout",function(d) {d3.select(this).attr("fill",color(d.Colors)).attr("opacity", 0.5)});
 
+		svg.selectAll("labelcirc")
+		  .data(data)
+		  .enter()
+		  .append("circle")
+		    .attr("cx", 25)
+		    .attr("cy", function(d,i){ return 25 + i*25})
+		    .attr("r", 8)
+		    .style("fill", function(d){ return color(d.Colors)})  
 		  
-		svg
+		svg.selectAll("labeltext")
+		  .data(data)
+		  .enter()
+		  .append("text")
+		    .attr("x", 45)
+		    .attr("y", function(d,i){ return 25 + i*25})
+		    .style("fill", function(d){ return color(d.Colors)})
+		    .text(function(d){ return d.Colors})
+		    .attr("text-anchor", "left")
+		    .style("alignment-baseline", "middle")		  
+		  
+		let axisDraw = svg
 		  .append('g')
-		  .attr("transform","translate("+width/2+",0)")
+		  .attr("transform","translate("+width+",0)")
 		  .call(percentAxis);
+		  
+		axisDraw.select('.domain')
+		  .attr('stroke','black');
 		  
 		var toolTipBar = svg.append("g")
 			.attr("class","focus-label");
