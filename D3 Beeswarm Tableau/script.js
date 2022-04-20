@@ -87,7 +87,7 @@
 
 		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
-		let percentAxis = d3.axisRight(yScale).tickSize(-width).tickFormat(d3.format(",.0%"));
+		let percentAxis = d3.axisLeft(yScale).tickSize(-width/2).tickFormat(d3.format(",.0%"));
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
@@ -108,24 +108,25 @@
 		  .attr("cx", (d) => xScale(d.Colors))
 		  .on("mouseover",function(d) {tooltipDisplay(d.Columns);})
 		  .on("mouseout",function(d) {d3.select(this).attr("fill",color(d.Colors)).attr("opacity", 0.5)});
-
+		
+		let colorLabels = [...new Set(data.map(d => d.Colors)).sort()];
 		svg.selectAll("labelcirc")
-		  .data(data)
+		  .data(colorLabels)
 		  .enter()
 		  .append("circle")
 		    .attr("cx", 25)
 		    .attr("cy", function(d,i){ return 25 + i*25})
 		    .attr("r", 8)
-		    .style("fill", function(d){ return color(d.Colors)})  
+		    .style("fill", function(d){ return color(d)})  
 		  
 		svg.selectAll("labeltext")
-		  .data(data)
+		  .data(colorLabels)
 		  .enter()
 		  .append("text")
 		    .attr("x", 45)
 		    .attr("y", function(d,i){ return 25 + i*25})
-		    .style("fill", function(d){ return color(d.Colors)})
-		    .text(function(d){ return d.Colors})
+		    .style("fill", function(d){ return color(d)})
+		    .text(function(d){ return d})
 		    .attr("text-anchor", "left")
 		    .style("alignment-baseline", "middle")		  
 		  
