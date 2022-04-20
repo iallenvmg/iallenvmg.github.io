@@ -87,7 +87,7 @@
 
 		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
-		let percentAxis = d3.axisLeft(yScale).tickSize(-width/2).tickFormat(d3.format(",.0%"));
+		let percentAxis = d3.axisLeft(yScale).tickSize(width/2).tickFormat(d3.format(",.0%"));
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
@@ -116,7 +116,7 @@
 		  .enter()
 		  .append("circle")
 		    .attr("cx", 25)
-		    .attr("cy", function(d,i){ return 25 + i*25})
+		    .attr("cy", function(d,i){ return height - (25 + i*25)})
 		    .attr("r", 8)
 		    .style("fill", function(d){ return color(d)})  
 		  
@@ -125,7 +125,7 @@
 		  .enter()
 		  .append("text")
 		    .attr("x", 45)
-		    .attr("y", function(d,i){ return 25 + i*25})
+		    .attr("y", function(d,i){ return height - (25 + i*25)})
 		    .style("fill", function(d){ return color(d)})
 		    .text(function(d){ return d})
 		    .attr("text-anchor", "left")
