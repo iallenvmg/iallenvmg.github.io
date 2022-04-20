@@ -193,7 +193,7 @@
 			.attr("cx", (d) => {
 			  return d.x;
 			})
-			.attr("cy", (d) => d.y);
+			//.attr("cy", (d) => d.y);
 		}
 		
 		function tooltipDisplay(changeColumns) {
