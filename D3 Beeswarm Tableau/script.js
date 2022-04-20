@@ -34,7 +34,8 @@
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
 	  console.log(settings);
-	  var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').split(',');
+	  var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').replace('"','').split(',');
+	  colorDict.fo
 	  console.log(colorDict)
 	  let dataArr = [];
 	  worksheet.getSummaryDataAsync().then(data => {
@@ -90,7 +91,7 @@
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
-		let size = d3.scaleLinear().domain(radiusDomain).range([5, 25]);
+		let size = d3.scaleLinear().domain(radiusDomain).range([2, 17]);
 
 		svg
 		  .selectAll(".circ")
@@ -138,20 +139,20 @@
 		let simulation = d3
 		  .forceSimulation(data)
 		  .force(
-			"y",
-			d3
-			  .forceY((d) => {
-				return yScale(d.Values);
-			  })
-			  .strength(1)
-		  )
-		  .force(
 			"x",
 			d3
 			  .forceX(function (d) {
 				return xScale(d.Colors);
 			  })
 			  .strength(0.2)
+		  )
+		  .force(
+			"y",
+			d3
+			  .forceY((d) => {
+				return yScale(d.Values);
+			  })
+			  .strength(1)
 		  )
 		  .force(
 			"collide",
