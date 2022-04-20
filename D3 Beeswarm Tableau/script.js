@@ -102,12 +102,12 @@
 		  .attr("id",(d) => d.Columns)
 		  .attr("stroke", (d) => color(d.Colors))
 		  .attr("fill", (d) => color(d.Colors))
-		  .attr("opacity", 0.5)
+		  .attr("opacity", 0.75)
 		  .attr("r", (d) => size(Math.sqrt(d.Radius)))
 		  .attr("cy", (d) => yScale(d.Values))
 		  .attr("cx", (d) => xScale(d.Colors))
 		  .on("mouseover",function(d) {tooltipDisplay(d.Columns);})
-		  .on("mouseout",function(d) {d3.select(this).attr("fill",color(d.Colors)).attr("opacity", 0.5)});
+		  .on("mouseout",function(d) {d3.select(this).attr("fill",color(d.Colors)).attr("opacity", 0.75)});
 		
 		let colorLabels = [...new Set(data.map(d => d.Colors))];
 		colorLabels = colorLabels.sort()
@@ -190,10 +190,10 @@
 
 		function tick() {
 		  d3.selectAll(".circ")
+			.attr("cy", (d) => d.y)
 			.attr("cx", (d) => {
 			  return d.x;
-			})
-			//.attr("cy", (d) => d.y);
+			});
 		}
 		
 		function tooltipDisplay(changeColumns) {
@@ -352,7 +352,7 @@ function fetchFilter() {
 	    }  else {
 	    	svg.selectAll(".circ")
 		    .attr("fill",color(d.Colors))
-		    .attr("opacity", 0.5);
+		    .attr("opacity", 0.75);
 		    
 		tooltipDisplay(parameter.currentValue.value)    
 	    }
