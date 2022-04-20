@@ -87,7 +87,7 @@
 
 		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
-		let percentAxis = d3.axisLeft(yScale).tickSize(width/2).tickFormat(d3.format(",.0%"));
+		let percentAxis = d3.axisRight(yScale).tickSize(width/4).tickFormat(d3.format(",.0%"));
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
@@ -133,11 +133,11 @@
 		  
 		let axisDraw = svg
 		  .append('g')
-		  .attr("transform","translate("+width+",0)")
+		  .attr("transform","translate("+width/2+",0)")
 		  .call(percentAxis);
 		  
 		axisDraw.select('.domain')
-		  .attr('stroke','black');
+		  .attr('stroke','grey');
 		  
 		var toolTipBar = svg.append("g")
 			.attr("class","focus-label");
