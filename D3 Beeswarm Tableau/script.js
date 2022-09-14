@@ -33,6 +33,8 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
+	  var indexScale = settings.selectedScale[1];
+	  console.log(settigns.selectedScale);
 	  console.log(settings);
 	  var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').replace('"','').split(',');
 	  colorDict.fo
