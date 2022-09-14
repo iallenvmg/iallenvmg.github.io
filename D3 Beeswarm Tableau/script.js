@@ -33,11 +33,14 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
-	  var indexScale = settings.selectedScale[1];
+	  var indexScale = JSON.parse(settings.selectedScale[1]);
 	  console.log(settings.selectedScale);
 	  console.log(settings);
-	  var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').replace('"','').split(',');
-	  colorDict.fo
+	  //var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').replace('"','').split(',');
+	  var colorDict = JSON.parse(settings.selectedColorDict[1])
+	  
+	  //colorDict.fo
+	  console.log(indexScale)
 	  console.log(colorDict)
 	  let dataArr = [];
 	  worksheet.getSummaryDataAsync().then(data => {
@@ -83,7 +86,7 @@
 
 		let yScale = d3
 		  .scaleLinear()
-		  .domain([0,1])
+		  .domain(indexScale)
 		  //.domain(d3.extent(data.map((d) => +d["Values"])))
 		  .range([height - 50, 50]);
 
