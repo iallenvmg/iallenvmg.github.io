@@ -39,7 +39,7 @@
 	  var indexScale = settings.selectedScale.replace('["','[').replace('"]',']')
 	  indexScale = JSON.parse(indexScale);
 	  //var colorDict = settings.selectedColorDict.replace('"','[').replace('[','').replace(']','').replace('"','').split(',');
-	  var colorDict = settings.selectedColorDict.replace('["','[').replace('"]',']')
+	  var colorDict = settings.selectedColorDict.replace('["','[').replace('"]',']').replace(/'/g, '"')
 	  colorDict = JSON.parse(colorDict)
 	  
 	  //colorDict.fo
