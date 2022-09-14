@@ -33,9 +33,10 @@
 	  var indexColumns = settings.selectedColumns[1];
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
-	  var indexScale = JSON.parse(settings.selectedScale[1]);
-	  console.log(settings.selectedScale);
 	  console.log(settings);
+	  console.log(settings.selectedScale[1]);
+	  console.log(settings.selectedColorDict[1]);
+	  var indexScale = JSON.parse(settings.selectedScale[1]);
 	  //var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').replace('"','').split(',');
 	  var colorDict = JSON.parse(settings.selectedColorDict[1])
 	  
