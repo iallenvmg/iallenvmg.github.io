@@ -36,10 +36,10 @@
 	  console.log(settings);
 	  console.log(settings.selectedScale);
 	  console.log(settings.selectedColorDict);
-	  var indexScale = settings.selectedScale.replace('"','')
+	  var indexScale = settings.selectedScale.replace('["','').replace('"]','')
 	  indexScale = JSON.parse(indexScale);
 	  //var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').replace('"','').split(',');
-	  var colorDict = settings.selectedColorDict.replace('"','')
+	  var colorDict = settings.selectedColorDict.replace('["','').replace('"]','')
 	  colorDict = JSON.parse(colorDict)
 	  
 	  //colorDict.fo
