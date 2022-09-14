@@ -146,6 +146,7 @@
 
 	function closeDialog() {
 		updateColorDict(document.getElementById('colorDictID').value)
+		updateScale(document.getElementById('scaleID').value)
 		let currentSettings = tableau.extensions.settings.getAll();
 		console.log(selectedColors);
 		console.log(selectedColorDict);
