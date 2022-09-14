@@ -4,11 +4,13 @@
     const columnsSettingsKey = 'selectedColumns';
     const radiusSettingsKey = 'selectedRadius';
     const valuesSettingsKey = 'selectedValues';
+    const scaleSettingsKey = 'selectedScale';
 	const colorDictSettingsKey = 'selectedColorDict';
 	let selectedColors = [];
 	let selectedColumns = [];
 	let selectedRadius = [];
 	let selectedValues = [];
+	let selectedScale = [];
 	let selectedColorDict = [];
 	let selectedSheet = [];
 	
@@ -30,6 +32,7 @@
 					$('#radius').empty();
 					$('#values').empty();
 					$('#colorDict').empty();
+					$('#scale').empty();
 					
 					let worksheetName = worksheet.name;
 					tableau.extensions.settings.set('sheet',worksheetName);
@@ -53,12 +56,14 @@
 		const textFormat3 = $('<h5>Select the radius value column:</h5>');
 		const textFormat4 = $('<h5>Select the linear value column:</h5>');
 		const textFormat5 = $("<h5>Enter a list of colors ['#hex','#hex',...]:</h5>");
+		const textFormat6 = $("<h5>Enter the minimum and maximum value [0,1]:</h5>");
 		
 		$('#colors').append(textFormat);
 		$('#columns').append(textFormat2);
 		$('#radius').append(textFormat3);
 		$('#values').append(textFormat4);
 		$('#colorDict').append(textFormat5);
+		$('#scale').append(textFormat6);
 		
 		worksheet.getSummaryDataAsync().then(function(data){
 			const columnsTable = data.columns;
@@ -69,6 +74,7 @@
 				const option4 = createOptionValues(name);
 			});
 			const option5 = createOptionColorDict();
+			const option6 = createOptionScale();
 		});
 		
 	}
@@ -121,7 +127,13 @@
 			selectedColorDict.push("['#000000']");
 		}
 	}
-	
+	function updateScale(id) {		
+		try {
+			selectedScale.push(id);
+		} catch(error) {
+			selectedScale.push("['#000000']");
+		}
+	}	
 	function updateData(id) {
 		let idIndex = selectedSheet.indexOf(id);
 		if (idIndex < 0) {
@@ -142,6 +154,7 @@
 		tableau.extensions.settings.set(radiusSettingsKey, JSON.stringify(selectedRadius));
 		tableau.extensions.settings.set(valuesSettingsKey, JSON.stringify(selectedValues));
 		tableau.extensions.settings.set(colorDictSettingsKey, JSON.stringify(selectedColorDict));
+		tableau.extensions.settings.set(scaleSettingsKey, JSON.stringify(selectedScale));
 
 		tableau.extensions.settings.saveAsync().then((newSavedSettings) => {
 			tableau.extensions.ui.closeDialog("test");
@@ -236,6 +249,17 @@
 			id: 'colorDictID'
 		}).appendTo(containerDiv);
     		$('#colorDict').append(containerDiv);
+
+	}	
+	
+    function createOptionScale () {
+		let containerDiv = $('<div />');
+
+		$('<input />', {
+			type: 'text',
+			id: 'scaleID'
+		}).appendTo(containerDiv);
+    		$('#scale').append(containerDiv);
 
 	}	
 	
