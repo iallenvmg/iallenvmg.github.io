@@ -34,12 +34,12 @@
 	  var indexRadius = settings.selectedRadius[1];
 	  var indexValues = settings.selectedValues[1];
 	  console.log(settings);
-	  console.log(settings.selectedScale.replace('["','').replace('"]',''));
-	  console.log(settings.selectedColorDict.replace('["','').replace('"]',''));
-	  var indexScale = settings.selectedScale.replace('["','').replace('"]','')
+	  console.log(settings.selectedScale.replace('["','[').replace('"]',']'));
+	  console.log(settings.selectedColorDict.replace('["','[').replace('"]',']'));
+	  var indexScale = settings.selectedScale.replace('["','[').replace('"]',']')
 	  indexScale = JSON.parse(indexScale);
-	  //var colorDict = settings.selectedColorDict.replace('"','').replace('[','').replace(']','').replace('"','').split(',');
-	  var colorDict = settings.selectedColorDict.replace('["','').replace('"]','')
+	  //var colorDict = settings.selectedColorDict.replace('"','[').replace('[','').replace(']','').replace('"','').split(',');
+	  var colorDict = settings.selectedColorDict.replace('["','[').replace('"]',']')
 	  colorDict = JSON.parse(colorDict)
 	  
 	  //colorDict.fo
