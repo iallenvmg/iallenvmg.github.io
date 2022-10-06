@@ -37,7 +37,16 @@
 	  console.log(settings.selectedScale.replace('["','[').replace('"]',']'));
 	  console.log(settings.selectedColorDict.replace('["','[').replace('"]',']'));
 	  var indexScale = settings.selectedScale.replace('["','[').replace('"]',']')
-	  indexScale = JSON.parse(indexScale);
+	  try {
+	  	indexScale = JSON.parse(indexScale);
+		if (indexScale) {
+			indexScale = JSON.parse(indexScale);
+		} else {
+			indexScale = JSON.parse("[0,1]");
+		}
+	  } catch(error) {
+	  	indexScale = JSON.parse("[0,1]");
+	  }
 	  //var colorDict = settings.selectedColorDict.replace('"','[').replace('[','').replace(']','').replace('"','').split(',');
 	  var colorDict = settings.selectedColorDict.replace('["','[').replace('"]',']').replace(/'/g, '"')
 	  colorDict = JSON.parse(colorDict)
