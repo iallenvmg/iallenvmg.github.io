@@ -40,7 +40,10 @@
 	  try {
 	  	indexScale = JSON.parse(indexScale);
 		if (indexScale) {
+			console.log(indexScale)
 			indexScale = JSON.parse(indexScale);
+			console.log(indexScale)
+
 		} else {
 			indexScale = JSON.parse("[0,1]");
 		}
