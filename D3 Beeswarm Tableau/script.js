@@ -39,8 +39,8 @@
 	  var indexScale = settings.selectedScale.replace('["','[').replace('"]',']')
 	  try {
 	  	indexScale = JSON.parse(indexScale);
+		console.log(indexScale)
 		if (indexScale) {
-			console.log(indexScale)
 			indexScale = JSON.parse(indexScale);
 			console.log(indexScale)
 
