@@ -39,14 +39,10 @@
 	  var indexScale = settings.selectedScale.replace('["','[').replace('"]',']')
 	  try {
 	  	indexScale = JSON.parse(indexScale);
-		console.log(indexScale)
-		if (indexScale) {
-			indexScale = JSON.parse(indexScale);
-			console.log(indexScale)
-
-		} else {
+		if !Array.isArray(indexScale) {
 			indexScale = JSON.parse("[0,1]");
-		}
+		};  
+		console.log(indexScale)
 	  } catch(error) {
 	  	indexScale = JSON.parse("[0,1]");
 	  }
