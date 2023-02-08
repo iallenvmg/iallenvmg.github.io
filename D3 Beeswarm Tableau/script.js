@@ -72,14 +72,7 @@
 		  console.log(dataArr)
 		  graph(dataArr);
 	  });
-	  console.log(data)
-	  var dataStdDev = getStandardDeviation(data.values)
-	  var dataMean = data.values.reduce((a, b) => a + b) / n
-	  
-	  var ciMin = dataMean - (2 * dataStdDev)
-	  var ciMax = dataMean + (2 * dataStdDev)
-	  
-	  console.log(ciMin,ciMax,dataStdDev,dataMean)
+
 	  
 	  var div = d3.select("body").append("div")
 		  .attr("class", "tooltip")
@@ -116,7 +109,14 @@
 		let size = d3.scaleLinear().domain(radiusDomain).range([3, 17]);
 
 		
-		
+		console.log(data)
+		var dataStdDev = getStandardDeviation(data.values)
+		var dataMean = data.values.reduce((a, b) => a + b) / n
+
+		var ciMin = dataMean - (2 * dataStdDev)
+		var ciMax = dataMean + (2 * dataStdDev)
+
+		console.log(ciMin,ciMax,dataStdDev,dataMean)		
 		
 		
 		svg
