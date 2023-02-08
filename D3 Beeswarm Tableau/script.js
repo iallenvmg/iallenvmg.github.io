@@ -110,9 +110,9 @@
 		let size = d3.scaleLinear().domain(radiusDomain).range([3, 17]);
 
 		
-		console.log(data)
-		var dataStdDev = getStandardDeviation(data.Values)
-		var dataMean = data.Values.reduce((a, b) => a + b) / n
+		let dataVal = data.map(a => a.Values);
+		var dataStdDev = getStandardDeviation(dataVal)
+		var dataMean = dataVal.reduce((a, b) => a + b) / n
 
 		var ciMin = dataMean - (2 * dataStdDev)
 		var ciMax = dataMean + (2 * dataStdDev)
