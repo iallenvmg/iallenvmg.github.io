@@ -107,7 +107,7 @@
 		
 		let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
-		let size = d3.scaleLinear().domain(radiusDomain).range([3, 17]);
+		let size = d3.scaleLinear().domain(radiusDomain).range([3, 15]);
 
 		
 		let dataVal = data.map(a => a.Values);
@@ -124,8 +124,8 @@
 		  .data([1])
 		  .enter()
 		  .append("rect")
-		  .attr('x',width*.1)
-		  .attr('width',width*.8)
+		  .attr('x',width*.16)
+		  .attr('width',width*.7)
 		  .attr('y',yScale(ciMax))
 		  .attr('height',yScale(ciMin)-yScale(ciMax))
 		  .attr('fill','#53b0bd')
@@ -135,8 +135,8 @@
 		  .data([1])
 		  .enter()
 		  .append("rect")
-		  .attr('x',width*.1)
-		  .attr('width',width*.8)
+		  .attr('x',width*.16)
+		  .attr('width',width*.7)
 		  .attr('y',yScale(ciMaxima))
 		  .attr('height',yScale(ciMinima)-yScale(ciMaxima))
 		  .attr('fill','#53b0bd')
