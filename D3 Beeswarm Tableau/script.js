@@ -24,6 +24,7 @@
   
   let unregisterHandlerFunction;
   
+  
     // ========================== D3 CHART ===================== //
 
   function plotChart(settings) {
