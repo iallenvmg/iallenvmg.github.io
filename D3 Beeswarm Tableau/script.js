@@ -112,7 +112,7 @@
 		
 		let dataVal = data.map(a => a.Values);
 		var dataStdDev = getStandardDeviation(dataVal)
-		var dataMean = dataVal.reduce((a, b) => a + b) / n
+		var dataMean = dataVal.reduce((a, b) => a + b) / dataVal.length
 
 		var ciMin = dataMean - (2 * dataStdDev)
 		var ciMax = dataMean + (2 * dataStdDev)
