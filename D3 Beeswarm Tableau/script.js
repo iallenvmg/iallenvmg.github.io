@@ -111,8 +111,8 @@
 
 		
 		console.log(data)
-		var dataStdDev = getStandardDeviation(data.values)
-		var dataMean = data.values.reduce((a, b) => a + b) / n
+		var dataStdDev = getStandardDeviation(data.Values)
+		var dataMean = data.Values.reduce((a, b) => a + b) / n
 
 		var ciMin = dataMean - (2 * dataStdDev)
 		var ciMax = dataMean + (2 * dataStdDev)
