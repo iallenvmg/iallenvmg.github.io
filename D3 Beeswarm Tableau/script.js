@@ -121,6 +121,8 @@
 
 		svg
 		  .selectAll(".confInt")
+		  .data([1])
+		  .enter()
 		  .append("rect")
 		  .attr('x',0)
 		  .attr('width',width)
@@ -130,6 +132,8 @@
 		  .attr('opacity',0.25)
 		svg
 		  .selectAll(".oneInt")
+		  .data([1])
+		  .enter()
 		  .append("rect")
 		  .attr('x',0)
 		  .attr('width',width)
