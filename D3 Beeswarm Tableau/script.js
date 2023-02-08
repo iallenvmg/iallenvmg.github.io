@@ -124,8 +124,8 @@
 		  .data([1])
 		  .enter()
 		  .append("rect")
-		  .attr('x',0)
-		  .attr('width',width)
+		  .attr('x',width*.1)
+		  .attr('width',width*.8)
 		  .attr('y',yScale(ciMax))
 		  .attr('height',yScale(ciMin)-yScale(ciMax))
 		  .attr('fill','#53b0bd')
@@ -135,8 +135,8 @@
 		  .data([1])
 		  .enter()
 		  .append("rect")
-		  .attr('x',0)
-		  .attr('width',width)
+		  .attr('x',width*.1)
+		  .attr('width',width*.8)
 		  .attr('y',yScale(ciMaxima))
 		  .attr('height',yScale(ciMinima)-yScale(ciMaxima))
 		  .attr('fill','#53b0bd')
@@ -217,7 +217,7 @@
 			  .forceX(function (d) {
 				return xScale(d.Colors);
 			  })
-			  .strength(0.05)
+			  .strength(0.01)
 		  )
 		  .force(
 			"y",
@@ -225,7 +225,7 @@
 			  .forceY((d) => {
 				return yScale(d.Values);
 			  })
-			  .strength(0.99)
+			  .strength(1)
 		  )
 		  .force(
 			"collide",
