@@ -116,10 +116,28 @@
 
 		var ciMin = dataMean - (2 * dataStdDev)
 		var ciMax = dataMean + (2 * dataStdDev)
+		var ciMinima = dataMean - (1 * dataStdDev)
+		var ciMaxima = dataMean + (1 * dataStdDev)
 
-		console.log(ciMin,ciMax,dataStdDev,dataMean)		
-		
-		
+		svg
+		  .selectAll(".confInt")
+		  .append("rect")
+		  .attr('x',0)
+		  .attr('width',width)
+		  .attr('y',yScale(ciMax))
+		  .attr('height',yScale(ciMin)-yScale(ciMax))
+		  .attr('fill','#53b0bd')
+		  .attr('opacity',0.25)
+		svg
+		  .selectAll(".oneInt")
+		  .append("rect")
+		  .attr('x',0)
+		  .attr('width',width)
+		  .attr('y',yScale(ciMaxima))
+		  .attr('height',yScale(ciMinima)-yScale(ciMaxima))
+		  .attr('fill','#53b0bd')
+		  .attr('opacity',0.25)
+		  
 		svg
 		  .selectAll(".circ")
 		  .data(data)
@@ -195,7 +213,7 @@
 			  .forceX(function (d) {
 				return xScale(d.Colors);
 			  })
-			  .strength(0.2)
+			  .strength(0.05)
 		  )
 		  .force(
 			"y",
@@ -203,7 +221,7 @@
 			  .forceY((d) => {
 				return yScale(d.Values);
 			  })
-			  .strength(1)
+			  .strength(0.99)
 		  )
 		  .force(
 			"collide",
