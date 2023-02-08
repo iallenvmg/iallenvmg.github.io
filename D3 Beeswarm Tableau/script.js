@@ -73,13 +73,7 @@
 		  graph(dataArr);
 	  });
 	  console.log(data)
-	  var dataStdDev = getStandardDeviation(data.values)
-	  var dataMean = data.values.reduce((a, b) => a + b) / n
-	  
-	  var ciMin = dataMean - (2 * dataStdDev)
-	  var ciMax = dataMean + (2 * dataStdDev)
-	  
-	  console.log(ciMin,ciMax,dataStdDev,dataMean)
+
 	  
 	  var div = d3.select("body").append("div")
 		  .attr("class", "tooltip")
@@ -267,11 +261,6 @@
 
   // This variable will save off the function we can call to unregister listening to marks-selected events
 
-	function getStandardDeviation (array) {
-	  const n = array.length
-	  const mean = array.reduce((a, b) => a + b) / n
-	  return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
-	}
  
 
   function initializeButtons () {
