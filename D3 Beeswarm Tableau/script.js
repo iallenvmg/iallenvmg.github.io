@@ -217,7 +217,7 @@
 			  .forceX(function (d) {
 				return xScale(d.Colors);
 			  })
-			  .strength(0.01)
+			  .strength(0.03)
 		  )
 		  .force(
 			"y",
@@ -234,7 +234,7 @@
 			})
 		  )
 		  .alphaDecay(0)
-		  .alpha(0.3)
+		  .alpha(0.4)
 		  .on("tick", tick);
 
 		function tick() {
