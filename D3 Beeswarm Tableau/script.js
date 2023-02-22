@@ -105,7 +105,8 @@
 
 		let percentAxis = d3.axisRight(yScale).tickSize(width/4).tickFormat(d3.format(",.0%"));
 		
-		let radiusDomain = d3.extent(data.map((d) => d.Radius));
+		//let radiusDomain = d3.extent(data.map((d) => d.Radius));
+		let radiusDomain = [0,d3.max(data.map((d) => d.Radius))];
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
 		let size = d3.scaleLinear().domain(radiusDomain).range([3, 15]);
 
