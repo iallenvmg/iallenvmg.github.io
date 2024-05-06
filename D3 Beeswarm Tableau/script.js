@@ -83,6 +83,11 @@
 		  height = $(window).height()-25;
 	  
 	  function graph(data) {
+		  
+		if (max(data.Values) > 2) {
+			indexScale = d3.extent(data.map((d) => +d["Values"]))
+		}
+		  
 		d3.select("svg").remove();
 		var svg = d3.select("body").append("svg")
 			.attr("width", width)
