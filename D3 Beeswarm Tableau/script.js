@@ -84,7 +84,7 @@
 	  
 	  function graph(data) {
 		  
-		if (max(data.Values) > 2) {
+		if (d3.max(data.Values) > 2) {
 			indexScale = d3.extent(data.map((d) => +d["Values"]))
 		}
 		  
