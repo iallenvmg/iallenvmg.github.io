@@ -84,8 +84,8 @@
 	  
 	  function graph(data) {
 		  
-		if (d3.max(data.Values) > 2) {
-			indexScale = d3.extent(data.map((d) => +d["Values"]))
+		if (d3.max(data.map((d) => d.Values)) > 2) {
+			indexScale = [d3.min(data.map((d) => d.Values)),d3.max(data.map((d) => d.Values))]
 		}
 		  
 		d3.select("svg").remove();
