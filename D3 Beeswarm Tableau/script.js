@@ -83,8 +83,9 @@
 		  height = $(window).height()-25;
 	  
 	  function graph(data) {
-		  
+		let dataFormat = "Percent"
 		if (d3.max(data.map((d) => d.Values)) > 2) {
+			dataFormat = "Number"
 			indexScale = [d3.min(data.map((d) => d.Values)),d3.max(data.map((d) => d.Values))]
 		}
 		  
@@ -109,7 +110,9 @@
 		let color = d3.scaleOrdinal().domain(Colors).range(colorDict);
 
 		let percentAxis = d3.axisRight(yScale).tickSize(width/4).tickFormat(d3.format(",.0%"));
-		
+		if (d3.max(data.map((d) => d.Values)) > 2) {
+			percentAxis = d3.axisRight(yScale).tickSize(width/4).tickFormat(d3.format(".2f"));
+		}
 		//let radiusDomain = d3.extent(data.map((d) => d.Radius));
 		let radiusDomain = [0,d3.max(data.map((d) => d.Radius))];
 		radiusDomain = radiusDomain.map((d) => Math.sqrt(d));
@@ -259,6 +262,9 @@
 			var tooltipData = dataArr.filter(function(n){return n.Columns == changeColumns});
 			var displayColumns = "Provider: " + tooltipData[0].Columns;
 			var displayValue = "Value: " + d3.format(",.0%")(tooltipData[0].Values);
+			if (dataFormat == "Number") {
+				displayValue = "Value: " + d3.format(".1f")(tooltipData[0].Values);	
+			}
 			var displayRadius = "Denominator: " + tooltipData[0].Radius;
 
 			
