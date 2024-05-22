@@ -84,7 +84,7 @@
 	  
 	  function graph(data) {
 		let dataFormat = "Percent"
-		indexScale = [0,1];
+		indexScale = [0,100];
 		if (d3.max(data.map((d) => d.Values)) > 2) {
 			dataFormat = "Number"
 			indexScale = [d3.min(data.map((d) => d.Values)),d3.max(data.map((d) => d.Values))]
